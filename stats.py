@@ -1,25 +1,36 @@
 class Stats():
-    def __init__(self, sortList):
-        self.sortList = sortList.copy()
+    def __init__(self, inputs_index: dict, max_value: int):
+        self._inputs_index = inputs_index
+        self._max_value = max_value
 
-    def less(self, number):
-        counter = 0
-        while counter < len(self.sortList) and number > self.sortList[counter]:
-            counter += 1
-        return counter
+    def less(self, value: int) -> int:
+        try:
+            if value in self._inputs_index:
+                return self._inputs_index[value][0]
+            raise KeyError
 
-    def higher(self, number):
-        counter = 0
-        for i in self.sortList:
-            if number < i:
-                counter += 1
-        return counter
+        except KeyError:
+            raise KeyError("Not valid arguments")   
 
-    def between(self, start_number, end_number):
-        counter = 0
-        for i in self.sortList:
-            if i >= start_number and i <= end_number:
-                counter += 1
-            if i > end_number:
-                break
-        return counter
+        except Exception:
+            raise Exception("General exception")
+
+    def between(self, min_value: int, max_value: int) -> int:
+        try:
+            min = self._inputs_index[min_value][0]
+            max = self._inputs_index[max_value][-1]
+            return (max - min) + 1
+        except KeyError:
+            raise KeyError("Not valid arguments")
+        except Exception:
+            raise Exception("General exception")
+
+    def higher(self, value: int) -> int:
+        try:
+            min = self._inputs_index[value][-1]
+            max = self._inputs_index[self._max_value][-1]
+            return max-min
+        except KeyError:
+            raise KeyError("Not valid arguments")
+        except Exception:
+            raise Exception("General exception")

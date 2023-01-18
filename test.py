@@ -1,11 +1,10 @@
 import unittest
-
-import datacapture
+from datacapture import DataCapture, Stats
 
 
 class TestDataCapture(unittest.TestCase):
     def setUp(self):
-        self.capture = datacapture.DataCapture()
+        self.capture = DataCapture()
         self.capture.add(3)
         self.capture.add(9)
         self.capture.add(3)
